@@ -33,6 +33,5 @@ class ResponseModel: Codable {
         num = try container.decodeIfPresent(Int.self, forKey: .num) ?? 0
         html = try container.decodeIfPresent(String.self, forKey: .html) ?? ""
         ans = try container.decodeIfPresent(String.self, forKey: .ans) ?? ""
-        
     }
 }

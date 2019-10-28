@@ -11,7 +11,7 @@ import Foundation
 struct NetworkEndpoint {
     
     static let baseURL = "http://www.ifsac.pw/mc/in?name="
-
+    
 }
 
 class NetworkService {
@@ -20,10 +20,10 @@ class NetworkService {
     
     private init() {  }
     
-    func request(_ date: String, _ nameAttribute: String, completion: @escaping(ResponseModel) -> Void) {
+    public func request(_ date: String, _ nameAttribute: String, completion: @escaping(ResponseModel) -> Void, timeIntervalCompletion: @escaping(TimeInterval) -> Void) {
         
         guard let requestURL = URL(string: NetworkEndpoint.baseURL + nameAttribute) else {return}
-    
+        let requestDate = Date()
         let requestPostJSON: [String: String] = ["date": date]
         let session = URLSession.shared
         var request = URLRequest(url: requestURL)
@@ -52,6 +52,7 @@ class NetworkService {
                     }
                 }
                 if let _ = response as? HTTPURLResponse {
+                    timeIntervalCompletion(Date().timeIntervalSince(requestDate))
                     print("Response")
                 }
             }
